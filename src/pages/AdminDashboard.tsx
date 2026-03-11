@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Users, Sparkles, Download, Filter } from 'lucide-react';
+import { ArrowLeft, Users, Sparkles, Download, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Submission {
   _id: string;
@@ -9,30 +9,25 @@ interface Submission {
   createdAt: string;
 }
 
-interface PaginationInfo {
-  hasMore: boolean;
-  nextCursor: string | null;
-  limit: number;
-  total: number;
-}
-
 export default function AdminDashboard() {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [pagination, setPagination] = useState<PaginationInfo | null>(null);
   const [apiKey, setApiKey] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [filter, setFilter] = useState<'all' | 'user' | 'expert'>('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [allSubmissions, setAllSubmissions] = useState<Submission[]>([]);
 
-  const fetchSubmissions = async (cursor?: string) => {
+  const ITEMS_PER_PAGE = 10;
+
+  const fetchSubmissions = async () => {
     try {
       setLoading(true);
       setError(null);
 
       const params = new URLSearchParams();
-      params.append('limit', '20');
-      if (cursor) params.append('cursor', cursor);
+      params.append('limit', '1000'); // Fetch all for client-side pagination
       if (filter !== 'all') params.append('userType', filter);
 
       const response = await fetch(`/api/get-submissions?${params.toString()}`, {
@@ -52,16 +47,8 @@ export default function AdminDashboard() {
       }
 
       const data = await response.json();
-      
-      if (cursor) {
-        // Append to existing submissions (pagination)
-        setSubmissions(prev => [...prev, ...data.data]);
-      } else {
-        // Replace submissions (new filter)
-        setSubmissions(data.data);
-      }
-      
-      setPagination(data.pagination);
+      setAllSubmissions(data.data);
+      setCurrentPage(1); // Reset to first page
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
@@ -79,7 +66,7 @@ export default function AdminDashboard() {
 
   const handleFilterChange = (newFilter: 'all' | 'user' | 'expert') => {
     setFilter(newFilter);
-    setSubmissions([]); // Clear existing submissions
+    setAllSubmissions([]); // Clear existing submissions
   };
 
   useEffect(() => {
@@ -88,9 +75,65 @@ export default function AdminDashboard() {
     }
   }, [filter, isAuthenticated]);
 
+  // Calculate paginated submissions
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    setSubmissions(allSubmissions.slice(startIndex, endIndex));
+  }, [currentPage, allSubmissions]);
+
+  const totalPages = Math.ceil(allSubmissions.length / ITEMS_PER_PAGE);
+  const showPagination = allSubmissions.length > ITEMS_PER_PAGE;
+
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      goToPage(currentPage + 1);
+    }
+  };
+
+  const goToPrevPage = () => {
+    if (currentPage > 1) {
+      goToPage(currentPage - 1);
+    }
+  };
+
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxPagesToShow = 5;
+    
+    if (totalPages <= maxPagesToShow) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) pages.push(i);
+        pages.push('...');
+        pages.push(totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1);
+        pages.push('...');
+        for (let i = totalPages - 3; i <= totalPages; i++) pages.push(i);
+      } else {
+        pages.push(1);
+        pages.push('...');
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) pages.push(i);
+        pages.push('...');
+        pages.push(totalPages);
+      }
+    }
+    
+    return pages;
+  };
+
   const exportToCSV = () => {
     const headers = ['Email', 'User Type', 'Created At'];
-    const rows = submissions.map(s => [
+    const rows = allSubmissions.map(s => [
       s.email,
       s.userType === 'user' ? 'Aspiring Entrepreneur' : 'Business Owner',
       new Date(s.createdAt).toLocaleString(),
@@ -188,7 +231,7 @@ export default function AdminDashboard() {
               <span className="text-[rgba(11,16,32,0.64)] text-sm">Total Submissions</span>
             </div>
             <div className="text-3xl font-[920] text-[#0b1020]">
-              {pagination?.total || 0}
+              {allSubmissions.length}
             </div>
           </div>
 
@@ -200,7 +243,7 @@ export default function AdminDashboard() {
               <span className="text-[rgba(11,16,32,0.64)] text-sm">Aspiring Entrepreneurs</span>
             </div>
             <div className="text-3xl font-[920] text-[#0b1020]">
-              {submissions.filter(s => s.userType === 'user').length}
+              {allSubmissions.filter(s => s.userType === 'user').length}
             </div>
           </div>
 
@@ -212,7 +255,7 @@ export default function AdminDashboard() {
               <span className="text-[rgba(11,16,32,0.64)] text-sm">Business Owners</span>
             </div>
             <div className="text-3xl font-[920] text-[#0b1020]">
-              {submissions.filter(s => s.userType === 'expert').length}
+              {allSubmissions.filter(s => s.userType === 'expert').length}
             </div>
           </div>
         </div>
@@ -318,15 +361,58 @@ export default function AdminDashboard() {
           </div>
 
           {/* Pagination */}
-          {pagination?.hasMore && (
-            <div className="px-6 py-4 border-t border-[rgba(11,16,32,0.08)] flex justify-center">
-              <button
-                onClick={() => fetchSubmissions(pagination.nextCursor!)}
-                disabled={loading}
-                className="px-6 py-3 bg-[#4B8FD8] text-white rounded-xl font-extrabold hover:bg-[#3d7ab8] transition-colors disabled:opacity-50"
-              >
-                {loading ? 'Loading...' : 'Load More'}
-              </button>
+          {showPagination && (
+            <div className="px-6 py-4 border-t border-[rgba(11,16,32,0.08)]">
+              <div className="flex items-center justify-between">
+                {/* Page info */}
+                <div className="text-sm text-[rgba(11,16,32,0.64)]">
+                  Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1} to {Math.min(currentPage * ITEMS_PER_PAGE, allSubmissions.length)} of {allSubmissions.length} entries
+                </div>
+
+                {/* Pagination controls */}
+                <div className="flex items-center gap-2">
+                  {/* Previous button */}
+                  <button
+                    onClick={goToPrevPage}
+                    disabled={currentPage === 1}
+                    className="p-2 rounded-lg border border-[rgba(11,16,32,0.12)] hover:bg-[rgba(75,143,216,0.1)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <ChevronLeft className="w-5 h-5 text-[#4B8FD8]" />
+                  </button>
+
+                  {/* Page numbers */}
+                  <div className="flex items-center gap-1">
+                    {getPageNumbers().map((page, index) => (
+                      page === '...' ? (
+                        <span key={`ellipsis-${index}`} className="px-3 py-2 text-[rgba(11,16,32,0.64)]">
+                          ...
+                        </span>
+                      ) : (
+                        <button
+                          key={page}
+                          onClick={() => goToPage(page as number)}
+                          className={`min-w-[40px] px-3 py-2 rounded-lg font-extrabold text-sm transition-all ${
+                            currentPage === page
+                              ? 'bg-[#4B8FD8] text-white'
+                              : 'border border-[rgba(11,16,32,0.12)] text-[rgba(11,16,32,0.64)] hover:bg-[rgba(75,143,216,0.1)]'
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      )
+                    ))}
+                  </div>
+
+                  {/* Next button */}
+                  <button
+                    onClick={goToNextPage}
+                    disabled={currentPage === totalPages}
+                    className="p-2 rounded-lg border border-[rgba(11,16,32,0.12)] hover:bg-[rgba(75,143,216,0.1)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <ChevronRight className="w-5 h-5 text-[#4B8FD8]" />
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </div>
