@@ -6,7 +6,7 @@ type UserType = 'user' | 'expert' | null;
 
 export default function Hero() {
   const [email, setEmail] = useState('');
-  const [userType, setUserType] = useState<UserType>(null);
+  const [userType, setUserType] = useState<UserType>('user');
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
