@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <footer className="py-8 sm:py-10 md:py-12 px-4 sm:px-6 lg:px-8 border-t border-[rgba(11,16,32,0.08)] bg-white">
       <div className="max-w-7xl mx-auto text-center">
-        <div className="text-[24px] sm:text-[28px] md:text-[32px] font-[920] tracking-[-0.03em] bg-linear-to-r from-[#4B8FD8] to-[#ffb199] bg-clip-text text-transparent mb-3 sm:mb-4">
+        <div className="text-[24px] sm:text-[28px] md:text-[32px] font-[920] tracking-[-0.03em] bg-gradient-to-r from-[#4B8FD8] to-[#ffb199] bg-clip-text text-transparent mb-3 sm:mb-4">
           DoneThat
         </div>
         <p className="text-[12px] sm:text-[13px] md:text-sm text-[rgba(11,16,32,0.52)] mb-3 sm:mb-4 px-4">

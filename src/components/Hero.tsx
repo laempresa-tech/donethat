@@ -57,13 +57,13 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-block px-4 sm:px-5 py-2 mb-6 rounded-full bg-linear-to-r from-[rgba(75,143,216,0.22)] to-[rgba(255,161,120,0.2)] border border-[rgba(11,16,32,0.08)]">
+          <div className="inline-block px-4 sm:px-5 py-2 mb-6 rounded-full bg-gradient-to-r from-[rgba(75,143,216,0.22)] to-[rgba(255,161,120,0.2)] border border-[rgba(11,16,32,0.08)]">
             <span className="text-[11px] sm:text-xs md:text-sm font-extrabold text-[#4B8FD8]">🚀 Launching Soon • Join 500+ on the waitlist</span>
           </div>
           
           <h1 className="text-[36px] sm:text-[44px] md:text-[52px] lg:text-[60px] xl:text-[64px] font-[920] tracking-[-0.04em] leading-[1.1] mb-5 sm:mb-6 text-[#0b1020]">
             Start your small business<br />
-            <span className="bg-linear-to-r from-[#4B8FD8] to-[#ffb199] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#4B8FD8] to-[#ffb199] bg-clip-text text-transparent">
               without expensive mistakes
             </span>
           </h1>
@@ -94,7 +94,7 @@ export default function Hero() {
                     whileTap={{ scale: 0.98 }}
                     className={`p-5 sm:p-6 rounded-[18px] sm:rounded-[20px] border-2 transition-all ${
                       userType === 'user'
-                        ? 'border-[#4B8FD8] bg-linear-to-r from-[rgba(75,143,216,0.1)] to-[rgba(255,161,120,0.08)] scale-[1.02]'
+                        ? 'border-[#4B8FD8] bg-gradient-to-r from-[rgba(75,143,216,0.1)] to-[rgba(255,161,120,0.08)] scale-[1.02]'
                         : 'border-[rgba(11,16,32,0.12)] hover:border-[#4B8FD8]'
                     }`}
                   >
@@ -112,7 +112,7 @@ export default function Hero() {
                     whileTap={{ scale: 0.98 }}
                     className={`p-5 sm:p-6 rounded-[18px] sm:rounded-[20px] border-2 transition-all ${
                       userType === 'expert'
-                        ? 'border-[#4B8FD8] bg-linear-to-r from-[rgba(75,143,216,0.1)] to-[rgba(255,161,120,0.08)] scale-[1.02]'
+                        ? 'border-[#4B8FD8] bg-gradient-to-r from-[rgba(75,143,216,0.1)] to-[rgba(255,161,120,0.08)] scale-[1.02]'
                         : 'border-[rgba(11,16,32,0.12)] hover:border-[#4B8FD8]'
                     }`}
                   >
@@ -139,7 +139,7 @@ export default function Hero() {
               <motion.button
                 type="submit"
                 disabled={!email || !userType || loading}
-                className="w-full px-6 sm:px-8 py-4 sm:py-5 rounded-2xl sm:rounded-[18px] bg-linear-to-r from-[#4B8FD8] to-[#ffb199] text-white font-[920] text-[16px] sm:text-[18px] tracking-[-0.02em] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 relative overflow-hidden"
+                className="w-full px-6 sm:px-8 py-4 sm:py-5 rounded-2xl sm:rounded-[18px] bg-gradient-to-r from-[#4B8FD8] to-[#ffb199] text-white font-[920] text-[16px] sm:text-[18px] tracking-[-0.02em] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 relative overflow-hidden"
                 whileHover={{ scale: !email || !userType || loading ? 1 : 1.02 }}
                 animate={{
                   boxShadow: !email && !userType && !loading ? [
@@ -162,7 +162,7 @@ export default function Hero() {
               >
                 {/* Shimmer effect */}
                 <motion.div
-                  className="absolute inset-0 bg-linear-to-r from-transparent via-white/30 to-transparent"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
                   initial={{ x: '-100%' }}
                   animate={{ x: '200%' }}
                   transition={{
@@ -223,7 +223,7 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-linear-to-r from-[#78FFC7] to-[#4B8FD8] rounded-3xl sm:rounded-[28px] p-8 sm:p-10 shadow-[0_26px_80px_rgba(11,16,32,0.14)]"
+              className="bg-gradient-to-r from-[#78FFC7] to-[#4B8FD8] rounded-3xl sm:rounded-[28px] p-8 sm:p-10 shadow-[0_26px_80px_rgba(11,16,32,0.14)]"
             >
               <CheckCircle2 className="w-14 h-14 sm:w-16 sm:h-16 text-white mx-auto mb-4" />
               <h3 className="text-[28px] sm:text-[32px] font-[920] tracking-[-0.03em] text-white mb-2">

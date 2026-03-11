@@ -23,7 +23,7 @@ function LandingPage() {
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-linear-to-br from-[#f6f7fb] to-white overflow-x-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-[#f6f7fb] to-white overflow-x-hidden">
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/admin" element={<AdminDashboard />} />

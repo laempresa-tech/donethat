@@ -111,13 +111,13 @@ export default function AdminDashboard() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-[#f6f7fb] to-white flex items-center justify-center px-4">
+      <div className="min-h-screen bg-gradient-to-br from-[#f6f7fb] to-white flex items-center justify-center px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-white rounded-3xl shadow-[0_26px_80px_rgba(11,16,32,0.14)] p-8 max-w-md w-full"
         >
-          <h1 className="text-3xl font-[920] tracking-[-0.03em] bg-linear-to-r from-[#4B8FD8] to-[#ffb199] bg-clip-text text-transparent mb-2">
+          <h1 className="text-3xl font-[920] tracking-[-0.03em] bg-gradient-to-r from-[#4B8FD8] to-[#ffb199] bg-clip-text text-transparent mb-2">
             Admin Dashboard
           </h1>
           <p className="text-[rgba(11,16,32,0.64)] mb-6">
@@ -135,7 +135,7 @@ export default function AdminDashboard() {
             />
             <button
               type="submit"
-              className="w-full px-6 py-4 rounded-2xl bg-linear-to-r from-[#4B8FD8] to-[#ffb199] text-white font-[920] hover:shadow-[0_16px_36px_rgba(75,143,216,0.3)] transition-all"
+              className="w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-[#4B8FD8] to-[#ffb199] text-white font-[920] hover:shadow-[0_16px_36px_rgba(75,143,216,0.3)] transition-all"
             >
               Login
             </button>
@@ -152,7 +152,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-[#f6f7fb] to-white">
+    <div className="min-h-screen bg-gradient-to-br from-[#f6f7fb] to-white">
       {/* Header */}
       <header className="bg-white/90 backdrop-blur-xl border-b border-[rgba(11,16,32,0.08)] sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
@@ -163,7 +163,7 @@ export default function AdminDashboard() {
             >
               <ArrowLeft className="w-5 h-5 text-[#4B8FD8]" />
             </button>
-            <h1 className="text-2xl font-[920] tracking-[-0.03em] bg-linear-to-r from-[#4B8FD8] to-[#ffb199] bg-clip-text text-transparent">
+            <h1 className="text-2xl font-[920] tracking-[-0.03em] bg-gradient-to-r from-[#4B8FD8] to-[#ffb199] bg-clip-text text-transparent">
               Admin Dashboard
             </h1>
           </div>

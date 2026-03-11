@@ -9,7 +9,7 @@ export default function FinalCTA() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.6 }}
-        className="max-w-4xl mx-auto text-center bg-linear-to-r from-[#4B8FD8] to-[#ffb199] rounded-3xl sm:rounded-[28px] md:rounded-4xl p-8 sm:p-10 md:p-12 lg:p-14 shadow-[0_26px_80px_rgba(11,16,32,0.2)]"
+        className="max-w-4xl mx-auto text-center bg-gradient-to-r from-[#4B8FD8] to-[#ffb199] rounded-3xl sm:rounded-[28px] md:rounded-4xl p-8 sm:p-10 md:p-12 lg:p-14 shadow-[0_26px_80px_rgba(11,16,32,0.2)]"
       >
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
