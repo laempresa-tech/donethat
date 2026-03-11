@@ -86,7 +86,7 @@ export const handler: Handler = async (event) => {
       headers,
       body: JSON.stringify({
         success: true,
-        message: 'Successfully joined the waitlist',
+        message: "All set! You're on the DoneThat waitlist.",
         data: {
           email: submission.email,
           userType: submission.userType,

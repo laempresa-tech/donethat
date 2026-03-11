@@ -50,8 +50,8 @@ export default function Hero() {
   };
 
   return (
-    <section className="pt-28 sm:pt-32 pb-16 sm:pb-20 px-6 sm:px-8 lg:px-12 xl:px-20 2xl:px-24 overflow-hidden">
-      <div className="w-full mx-auto text-center">
+    <section className="pt-28 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -61,14 +61,14 @@ export default function Hero() {
             <span className="text-[11px] sm:text-xs md:text-sm font-extrabold text-[#4B8FD8]">🚀 Launching Soon • Join 500+ on the waitlist</span>
           </div>
           
-          <h1 className="text-[36px] sm:text-[48px] md:text-[56px] lg:text-[72px] xl:text-[80px] 2xl:text-[88px] font-[920] tracking-[-0.04em] leading-[1.08] sm:leading-[1.05] lg:leading-[1.02] mb-5 sm:mb-6 text-[#0b1020] px-2 sm:px-4">
+          <h1 className="text-[36px] sm:text-[44px] md:text-[52px] lg:text-[60px] xl:text-[64px] font-[920] tracking-[-0.04em] leading-[1.1] mb-5 sm:mb-6 text-[#0b1020]">
             Start your small business<br />
             <span className="bg-linear-to-r from-[#4B8FD8] to-[#ffb199] bg-clip-text text-transparent">
               without expensive mistakes
             </span>
           </h1>
           
-          <p className="text-[16px] sm:text-[18px] md:text-[20px] lg:text-[22px] text-[rgba(11,16,32,0.64)] mb-10 sm:mb-12 leading-relaxed px-2 sm:px-4">
+          <p className="text-[16px] sm:text-[18px] md:text-[20px] text-[rgba(11,16,32,0.64)] mb-10 sm:mb-12 leading-relaxed max-w-2xl mx-auto">
             Book 1:1 video calls with real small business owners who've launched coffee shops, 
             Airbnbs, nail salons, food trucks, and more. Get real advice before you invest.
           </p>
@@ -79,7 +79,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="w-full mx-auto">
+          className="max-w-2xl mx-auto">
           {!submitted ? (
             <form onSubmit={handleSubmit} className="bg-white rounded-3xl sm:rounded-[28px] p-6 sm:p-8 shadow-[0_26px_80px_rgba(11,16,32,0.14)] border border-[rgba(11,16,32,0.08)]">
               <div className="mb-6">
@@ -227,10 +227,10 @@ export default function Hero() {
             >
               <CheckCircle2 className="w-14 h-14 sm:w-16 sm:h-16 text-white mx-auto mb-4" />
               <h3 className="text-[28px] sm:text-[32px] font-[920] tracking-[-0.03em] text-white mb-2">
-                You're on the list!
+                All set! You're on the DoneThat waitlist.
               </h3>
               <p className="text-white/90 text-[16px] sm:text-[18px]">
-                We'll send you an exclusive invite when we launch.
+                We'll notify you when we launch!
               </p>
             </motion.div>
           )}

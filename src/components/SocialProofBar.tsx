@@ -24,8 +24,8 @@ export default function SocialProofBar() {
   ];
 
   return (
-    <section className="py-8 sm:py-12 px-6 sm:px-8 lg:px-12 xl:px-20 2xl:px-24 bg-linear-to-r from-[rgba(75,143,216,0.04)] to-[rgba(255,161,120,0.04)] overflow-hidden">
-      <div className="w-full mx-auto">
+    <section className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 bg-linear-to-r from-[rgba(75,143,216,0.04)] to-[rgba(255,161,120,0.04)]">
+      <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
           {stats.map((item, index) => (
             <motion.div

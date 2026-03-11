@@ -4,7 +4,7 @@ import { Sparkles } from 'lucide-react';
 export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-[rgba(11,16,32,0.08)]">
-      <div className="w-full px-6 sm:px-8 lg:px-12 xl:px-20 2xl:px-24 py-3 sm:py-5 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-5 flex items-center justify-between">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
