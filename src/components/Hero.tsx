@@ -8,20 +8,44 @@ export default function Hero() {
   const [email, setEmail] = useState('');
   const [userType, setUserType] = useState<UserType>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email && userType) {
-      // Store signup (in production, this would call an API)
-      console.log('Signup:', { email, userType });
-      setSubmitted(true);
-      
-      // Reset after 3 seconds
-      setTimeout(() => {
-        setEmail('');
-        setUserType(null);
-        setSubmitted(false);
-      }, 3000);
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch('/api/submit-form', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, userType }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to submit');
+        }
+
+        setSubmitted(true);
+        
+        // Reset after 5 seconds
+        setTimeout(() => {
+          setEmail('');
+          setUserType(null);
+          setSubmitted(false);
+        }, 5000);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to submit. Please try again.');
+        setTimeout(() => setError(null), 5000);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -114,11 +138,11 @@ export default function Hero() {
 
               <motion.button
                 type="submit"
-                disabled={!email || !userType}
+                disabled={!email || !userType || loading}
                 className="w-full px-6 sm:px-8 py-4 sm:py-5 rounded-2xl sm:rounded-[18px] bg-linear-to-r from-[#4B8FD8] to-[#ffb199] text-white font-[920] text-[16px] sm:text-[18px] tracking-[-0.02em] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 relative overflow-hidden"
-                whileHover={{ scale: !email || !userType ? 1 : 1.02 }}
+                whileHover={{ scale: !email || !userType || loading ? 1 : 1.02 }}
                 animate={{
-                  boxShadow: !email && !userType ? [
+                  boxShadow: !email && !userType && !loading ? [
                     '0 0 0 0 rgba(75, 143, 216, 0)',
                     '0 16px 36px rgba(75, 143, 216, 0.3)',
                     '0 0 0 0 rgba(75, 143, 216, 0)',
@@ -160,23 +184,35 @@ export default function Hero() {
                       ease: "easeInOut"
                     }}
                   >
-                    Join the Waitlist
+                    {loading ? 'Submitting...' : 'Join the Waitlist'}
                   </motion.span>
-                  <motion.div
-                    animate={{
-                      x: [0, 3, 0],
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      repeatType: "loop",
-                      ease: "easeInOut"
-                    }}
-                  >
-                    <ArrowRight className="w-5 h-5" />
-                  </motion.div>
+                  {!loading && (
+                    <motion.div
+                      animate={{
+                        x: [0, 3, 0],
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        repeatType: "loop",
+                        ease: "easeInOut"
+                      }}
+                    >
+                      <ArrowRight className="w-5 h-5" />
+                    </motion.div>
+                  )}
                 </span>
               </motion.button>
+
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm"
+                >
+                  {error}
+                </motion.div>
+              )}
 
               <p className="text-xs sm:text-sm text-[rgba(11,16,32,0.52)] mt-4 flex items-center justify-center gap-2">
                 <Shield className="w-3 h-3 sm:w-4 sm:h-4" />

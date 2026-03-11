@@ -55,7 +55,7 @@ export default function BenefitsSection() {
                   transition={{ delay: 0.3 + i * 0.1 }}
                   className="flex items-start gap-3"
                 >
-                  <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 mt-0.5 shrink-0" />
                   <span className="text-white/95 text-[13px] sm:text-[14px] md:text-[16px]">{benefit}</span>
                 </motion.li>
               ))}
@@ -95,7 +95,7 @@ export default function BenefitsSection() {
                   transition={{ delay: 0.3 + i * 0.1 }}
                   className="flex items-start gap-3"
                 >
-                  <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 mt-0.5 shrink-0" />
                   <span className="text-white/95 text-[13px] sm:text-[14px] md:text-[16px]">{benefit}</span>
                 </motion.li>
               ))}
